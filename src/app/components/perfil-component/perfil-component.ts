@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Empleado } from '../../models/empleado';
+import { ServiceEmpleados } from '../../services/service.empleados';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-perfil-component',
@@ -6,4 +9,17 @@ import { Component } from '@angular/core';
   styleUrl: './perfil-component.css',
   templateUrl: './perfil-component.html',
 })
-export class PerfilComponent {}
+export class PerfilComponent implements OnInit {
+  public empleado!: Empleado;
+
+  constructor(
+    private _cdr: ChangeDetectorRef,
+    private _service: ServiceEmpleados,
+    private _router: Router,
+  ) {}
+
+  async ngOnInit(): Promise<void> {
+    this.empleado = await this._service.getPerfilEmpleadoAsync();
+    this._cdr.detectChanges();
+  }
+}

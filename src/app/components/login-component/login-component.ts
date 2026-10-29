@@ -1,5 +1,6 @@
-import { ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
-import { AuthService } from '../../services/service.auth';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ServiceEmpleados } from '../../services/service.empleados';
+import { Login } from '../../models/login';
 
 @Component({
   selector: 'app-login-component',
@@ -7,28 +8,27 @@ import { AuthService } from '../../services/service.auth';
   styleUrl: './login-component.css',
   templateUrl: './login-component.html',
 })
-export class LoginComponent {
-  @ViewChild('cajanombre') cajaNombre!: ElementRef;
-  @ViewChild('cajapassword') cajaPassword!: ElementRef;
+export class LoginComponent implements OnInit {
+  @ViewChild("cajauser") cajaUser!: ElementRef;
+  @ViewChild("cajapassword") cajaPassword!: ElementRef;
   public mensaje!: string;
 
   constructor(
-    private _serviceAuth: AuthService,
     private _cdr: ChangeDetectorRef,
-  ) {}
+    private _service: ServiceEmpleados
+  ){}
 
-  async login() {
-    let nombre = this.cajaNombre.nativeElement.value;
+  async logInEmpleado(): Promise<void>{
+    let userName = this.cajaUser.nativeElement.value;
     let password = this.cajaPassword.nativeElement.value;
-    let auth = { nombre, password };
-    try {
-      let response = await this._serviceAuth.login(auth);
-      let token = response.token;
-      localStorage.setItem('token', token);
-      this.mensaje = 'Login successful';
-    } catch (error) {
-      this.mensaje = 'Login failed';
-    }
+    let login = new Login(userName, password);
+    let response = await this._service.logInEmpleadoAsync(login);
+    this.mensaje = "Ya estas dentro, a jugar";
+    sessionStorage.setItem("TOKEN", response.response);
     this._cdr.detectChanges();
+  }
+
+  ngOnInit(): void {
+    
   }
 }

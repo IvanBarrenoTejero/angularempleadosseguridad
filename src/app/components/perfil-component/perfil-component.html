@@ -1,1 +1,17 @@
-<p>perfil-component works!</p>
+<h1 style="color:blue">Mi perfil</h1>
+@if (empleado){
+    <ul class="list-group">
+        <li class="list-group-item">
+            Apellido: {{empleado.apellido}}
+        </li>
+        <li class="list-group-item">
+            Oficio: {{empleado.oficio}}
+        </li>        
+        <li class="list-group-item">
+            Salario: {{empleado.salario}}
+        </li>        
+        <li class="list-group-item">
+            Jefe: {{empleado.director}}
+        </li>        
+    </ul>
+}

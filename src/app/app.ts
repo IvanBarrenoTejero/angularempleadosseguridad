@@ -7,5 +7,5 @@ import { Component, signal } from '@angular/core';
   templateUrl: './app.html',
 })
 export class App {
-  protected readonly title = signal('angularempleadosseguridad');
+  protected readonly title = signal('angularsecurityempleados');
 }

@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Login } from "../models/login";
 import { environment } from "../../environments/environment.development";
-import { firstValueFrom } from "rxjs";
+import { firstValueFrom, Observable } from "rxjs";
 import { Empleado } from "../models/empleado";
 
 @Injectable()
@@ -19,6 +19,14 @@ export class ServiceEmpleados {
             this._http.post(this.url + request, json, {headers: header})
         )
     }
+
+    logInEmpleadoObservable(user: Login): Observable<any> {
+        let request = "auth/login";
+        let json = JSON.stringify(user);
+        let header = new HttpHeaders()
+            .set("content-type", "application/json");
+        return    this._http.post(this.url + request, json, {headers: header})
+    }    
 
     async getPerfilEmpleadoAsync(): Promise<Empleado>{
         let request = "api/empleados/perfilempleado";

@@ -1,6 +1,7 @@
-import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { ServiceEmpleados } from '../../services/service.empleados';
 import { Login } from '../../models/login';
+import { ServiceAuthEmpleados } from '../../services/service.auth.empleados';
 
 @Component({
   selector: 'app-login-component',
@@ -9,6 +10,8 @@ import { Login } from '../../models/login';
   templateUrl: './login-component.html',
 })
 export class LoginComponent implements OnInit {
+  private _serviceAuth: ServiceAuthEmpleados = 
+    inject(ServiceAuthEmpleados);
   @ViewChild("cajauser") cajaUser!: ElementRef;
   @ViewChild("cajapassword") cajaPassword!: ElementRef;
   public mensaje!: string;
@@ -24,8 +27,19 @@ export class LoginComponent implements OnInit {
     let login = new Login(userName, password);
     let response = await this._service.logInEmpleadoAsync(login);
     this.mensaje = "Ya estas dentro, a jugar";
-    sessionStorage.setItem("TOKEN", response.response);
+    await this._serviceAuth.logInEmpleadoAsync(response.response);
     this._cdr.detectChanges();
+  }
+
+  logInEmpleadoObservable(): void {
+    let userName = this.cajaUser.nativeElement.value;
+    let password = this.cajaPassword.nativeElement.value;
+    let login = new Login(userName, password);
+    this._service.logInEmpleadoObservable(login).subscribe(async(response) => {
+      this.mensaje = "Ya estas dentro, a jugar";
+      await this._serviceAuth.logInEmpleadoAsync(response.response);
+      this._cdr.detectChanges();
+    })
   }
 
   ngOnInit(): void {

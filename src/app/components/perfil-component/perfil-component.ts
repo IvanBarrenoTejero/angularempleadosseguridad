@@ -15,11 +15,17 @@ export class PerfilComponent implements OnInit {
   constructor(
     private _cdr: ChangeDetectorRef,
     private _service: ServiceEmpleados,
-    private _router: Router,
-  ) {}
+    private _router: Router
+  ){}
 
   async ngOnInit(): Promise<void> {
     this.empleado = await this._service.getPerfilEmpleadoAsync();
-    this._cdr.detectChanges();
+    this._cdr.detectChanges();    
+    // if (sessionStorage.getItem("TOKEN") == null){
+    //   this._router.navigate(["/login"])
+    // }else{
+    //   this.empleado = await this._service.getPerfilEmpleadoAsync();
+    //   this._cdr.detectChanges();
+    // }
   }
 }

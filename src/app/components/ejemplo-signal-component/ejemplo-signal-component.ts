@@ -1,5 +1,6 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { ServiceSignal } from '../../services/service.signal';
+
 @Component({
   selector: 'app-ejemplo-signal-component',
   standalone: false,
@@ -9,15 +10,19 @@ import { ServiceSignal } from '../../services/service.signal';
 export class EjemploSignalComponent {
   //recuperamos nuestro servicio utilizando inject
   //para que sea SINGLETON
-  private _serviceSignal: ServiceSignal = inject(ServiceSignal);
+  private _serviceSignal: ServiceSignal = 
+    inject(ServiceSignal);
   //esta variable apunta al contador del service
   public contador = this._serviceSignal.contador;
   public doble = this._serviceSignal.doble;
 
   reiniciarContador(): void {
-    this._serviceSignal.reiniciarContador();
+    this._serviceSignal.reiniciarContador()
   }
+
   incrementarContador(): void {
-    this._serviceSignal.incrementarContador();
+    this._serviceSignal.incrementarContador()
   }
 }
+
+

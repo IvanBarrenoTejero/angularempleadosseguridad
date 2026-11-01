@@ -25,10 +25,10 @@ import { EjemploSignalComponent } from './components/ejemplo-signal-component/ej
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [
+    AuthGuard,
     provideBrowserGlobalErrorListeners(),
     provideHttpClient(),
     ServiceEmpleados,
-    AuthGuard,
   ],
   bootstrap: [App],
 })

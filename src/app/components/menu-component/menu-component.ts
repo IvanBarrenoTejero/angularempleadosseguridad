@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { Router } from '@angular/router';
 import { ServiceSignal } from '../../services/service.signal';
+import { ServiceAuthEmpleados } from '../../services/service.auth.empleados';
+import { Empleado } from '../../models/empleado';
 
 @Component({
   selector: 'app-menu-component',
@@ -9,12 +10,13 @@ import { ServiceSignal } from '../../services/service.signal';
   templateUrl: './menu-component.html',
 })
 export class MenuComponent {
-  constructor(private _router: Router) {}
   private _serviceSignal: ServiceSignal = inject(ServiceSignal);
+  private _serviceAuth: ServiceAuthEmpleados = 
+    inject(ServiceAuthEmpleados);
+  public usuario = this._serviceAuth.user;
   public contador = this._serviceSignal.contador;
 
   logOutEmpleado(): void {
-    sessionStorage.removeItem('TOKEN');
-    void this._router.navigate(['/login']);
+    this._serviceAuth.logOutEmpleado();
   }
 }

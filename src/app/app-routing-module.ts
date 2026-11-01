@@ -8,15 +8,23 @@ import { AuthGuard } from './guards/auth-guard';
 import { EjemploSignalComponent } from './components/ejemplo-signal-component/ejemplo-signal-component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'perfil', component: PerfilComponent, canActivate: [AuthGuard] },
-  { path: 'subordinados', component: SubordinadosComponent, canActivate: [AuthGuard] },
-  { path: 'signal', component: EjemploSignalComponent, canActivate: [AuthGuard] },
+  {path: "", component: HomeComponent},
+  {path: "login", component: LoginComponent},
+  {
+    path: "perfil", 
+    component: PerfilComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "subordinados", 
+    component: SubordinadosComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: "signal", component: EjemploSignalComponent}
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
